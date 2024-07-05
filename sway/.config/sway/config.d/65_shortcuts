@@ -27,7 +27,8 @@ bindsym $mod+Shift+q kill
 bindsym $mod+Shift+c reload
 
 # Menus for bemenu/dmenu
-bindsym $mod+r exec $menu_run
+bindsym $mod+r exec $menu
+# TODO: update these for rofi
 bindsym $mod+p exec $local_bin/passmenu_dmenu
 bindsym $mod+c exec clipman pick -t $menu
 bindsym $mod+Shift+x exec $local_bin/system_dmenu

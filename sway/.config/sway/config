@@ -14,9 +14,9 @@ set $wallpaper /home/mcritchlow/Pictures/background.jpg
 set $mod Mod4
 
 # Application defaults
-set $term alacritty
-set $menu bemenu
-set $menu_run bemenu-run -p Run | xargs swaymsg exec
+set $term foot
+set $rofi_cmd rofi -terminal '$term'
+set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
 
 # Theme
 # TODO: map to github terminal theme colors
