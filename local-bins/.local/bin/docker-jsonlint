@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+exec docker run -i --rm --volume "$(pwd):/data" mcritchlow/jsonlint:latest "$@"

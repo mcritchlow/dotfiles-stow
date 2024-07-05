@@ -1,0 +1,11 @@
+[user]
+  name = Matt Critchlow
+  email = matt@critchlow.xyz
+  signingkey = 5B86D84AB60CAB15
+[sendemail]
+	smtpserver = /usr/bin/msmtp
+  smtpserveroption=-a
+  smtpserveroption=kolab
+	annotate = yes
+	suppresscc = self
+  confirm = always

@@ -1,0 +1,21 @@
+# vim: set ft=conf:
+#
+# Scratchpad:
+#
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+#
+
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+s move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+s scratchpad show
+
+# Scratchpads
+#
+# Terminal
+for_window [app_id="scratchpad"] floating enable
+for_window [app_id="scratchpad"] resize set 75 ppt 75 ppt
+for_window [app_id="scratchpad"] move scratchpad

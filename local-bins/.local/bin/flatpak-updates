@@ -1,0 +1,10 @@
+#!/bin/sh
+if test -f /usr/bin/flatpak; then
+  updates_count=$(flatpak remote-ls --updates | awk -v ORS=',' '{ print $1 }')
+  if [ -z "$updates_count" ]; then
+    exit 0
+  else
+    notify-send --icon=utilities-terminal --expire-time=60000 --app-name="Flatpack Updates" "$updates_count"
+  fi
+fi
+exit 0

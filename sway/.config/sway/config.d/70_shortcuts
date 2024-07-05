@@ -1,0 +1,13 @@
+# vim: set ft=conf:
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+font pango:$font_family $font_size
+
+# bar {
+#     position bottom
+#     font pango:$font_family $font_size
+
+#     swaybar_command waybar
+# }

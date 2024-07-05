@@ -1,0 +1,11 @@
+#!/bin/sh
+# This script will let a user easily open a Flatpak app
+
+# example:
+# Slack com.slack.Slack
+# Spotify com.spotify.Client
+paks=$(flatpak list --app --columns=application | awk '{print $1}')
+
+pak_app=$(echo "$paks" | dmenu -i -l 5 -p "Choose a Flatpak application to open")
+
+flatpak run "$pak_app" &

@@ -1,0 +1,76 @@
+#! /usr/bin/env ruby
+#
+# Usage:
+# 1. You will need an existing password store
+# 2. You will need lastpass-cli installed and authenticated
+
+require 'English'
+require 'json'
+require 'open3'
+
+LAST_LPASS_SYNC = "#{ENV['HOME']}/.password-store/last_lpass_sync".freeze
+last_pass_sync_time = if File.exist?(LAST_LPASS_SYNC)
+                        File.read(LAST_LPASS_SYNC).to_i
+                      else
+                        0
+                      end
+
+json_input = ''
+Open3.pipeline_r([ENV, 'lpass ls --sync=now'],
+                 [ENV, 'grep -v "/ "'],
+                 [ENV, "awk '{print $(NF)}'"],
+                 [ENV, "sed 's/\]//g'"],
+                 [ENV, 'xargs lpass show --all --json']) do |last_stdout, _wait_threads|
+  last_stdout.each_line do |line|
+    json_input << line.chomp
+  end
+end
+sites = JSON.parse(json_input, symbolize_names: true)
+
+successful = 0
+errors = []
+sites.each do |site|
+  if site[:last_modified_gmt].to_i < last_pass_sync_time
+    puts "Skipping #{site[:fullname]}. Hasn't been updated since last sync.."
+    next
+  end
+
+  pass_entry = ''
+
+  if site[:url].eql?('http://sn')
+    # Notes only have a note field, surprise!
+    puts "Creating Secure Note #{site[:fullname]}."
+    pass_entry = site[:note]
+  else
+    puts "Creating Site #{site[:fullname]}."
+    pass_entry = [site[:password], '----',
+                  "url: #{site[:url]}",
+                  "username: #{site[:username]}",
+                  "note: #{site[:note]}"].join("\n") + "\n"
+  end
+
+  name = site[:fullname].tr(' ', '')
+  IO.popen("pass insert -m '#{name}' > /dev/null", 'w') do |io|
+    io.puts pass_entry
+  end
+  if $CHILD_STATUS == 0
+    puts ' done!'
+    successful += 1
+  else
+    puts ' error!'
+    errors << "error creating or updating #{name}"
+  end
+end
+puts "#{successful} records successfully imported!"
+
+unless errors.empty?
+  puts "There were #{errors.length} errors:"
+  errors.each { |e| print e.name + (e == errors.last ? ".\n" : ", ")}
+  puts 'These probably occurred because an identically-named record already existed, or because there were multiple entries with the same name in the csv file.'
+  exit 1
+end
+
+# Update last sync for next time
+File.open(LAST_LPASS_SYNC, 'w') { |f| f.write(Time.now.to_i) }
+puts "#{LAST_LPASS_SYNC} updated, remember to git commit!"
+exit 0

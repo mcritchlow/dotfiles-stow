@@ -1,0 +1,38 @@
+#!/bin/sh
+# Given a filename and a line number, construct a URL for the remote file online
+[ -z "$1" ] && exit 1
+
+# Given a filename
+git_file="$1"
+start_line="$2"
+end_line="$3"
+
+cd "${git_file%/*}" || exit 1
+
+# Parameter Expansion is used below. see man bash
+# ${parameter#word}
+# ${parameter##word}
+#        Remove  matching  prefix  pattern.   The word is expanded to produce a pattern just as in pathname expansion, and matched against the expanded value of parameter using the
+#        rules described under Pattern Matching below.  If the pattern matches the beginning of the value of parameter, then the result of the expansion is the  expanded  value  of
+#        parameter with the shortest matching pattern (the ``#'' case) or the longest matching pattern (the ``##'' case) deleted.  If parameter is @ or *, the pattern removal oper‐
+#        ation is applied to each positional parameter in turn, and the expansion is the resultant list.  If parameter is an array variable subscripted with @ or *, the pattern re‐
+#        moval operation is applied to each member of the array in turn, and the expansion is the resultant list.
+
+
+_project_top_level="$(git rev-parse --show-toplevel)"
+project="${_project_top_level##*/}"
+relative_path=${git_file#*/$project/}
+branch=$(git branch --show-current)
+
+# # Determine the remote system (gitlab, github, sr.ht)
+remote=$(git remote -v | head -n1 | tr -d '\n')
+if [ -z "${remote##*git.sr.ht*}" ]; then
+  account=$(echo "$remote" | sed -r 's/.*git.sr.ht[:\/](.+)\/.*/\1/')
+  echo "https://git.sr.ht/$account/$project/tree/$branch/$relative_path#L$start_line-$end_line"
+elif [ -z "${remote##*gitlab*}" ]; then
+  account=$(echo "$remote" | sed -r 's/.*gitlab.com[:\/](.+)\/.*/\1/')
+  echo "https://gitlab.com/$account/$project/blob/$branch/$relative_path#L$start_line-$end_line"
+elif [ -z "${remote##*github*}" ]; then
+  account=$(echo "$remote" | sed -r 's/.*github.com[:\/](.+)\/.*/\1/')
+  echo "https://github.com/$account/$project/blob/$branch/$relative_path#L$start_line-L$end_line"
+fi

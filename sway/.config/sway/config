@@ -1,0 +1,32 @@
+# vim: set ft=conf:
+
+# Don't use xwayland. We're committed.
+xwayland disable
+
+# Read `man 5 sway` for a complete reference.
+### Variables
+# Path to local bin files
+set $local_bin /home/mcritchlow/.local/bin
+set $wallpaper /home/mcritchlow/Pictures/background.jpg
+#
+# Logo key. Use Mod1 for Alt.
+# Logo key. Use Mod4 for Super.
+set $mod Mod4
+
+# Application defaults
+set $term alacritty
+set $menu bemenu
+set $menu_run bemenu-run -p Run | xargs swaymsg exec
+
+# Theme
+# TODO: map to github terminal theme colors
+set $bg #000000
+set $bga #0451A5
+set $fg #ffffff
+set $fgi #888888
+set $fgu #555555
+set $btf #000000
+set $font_family monospace
+set $font_size 11
+
+include ~/.config/sway/config.d/*

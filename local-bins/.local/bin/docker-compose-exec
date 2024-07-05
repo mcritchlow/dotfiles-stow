@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+# Used for local vimrc.local setup for null-ls
+# Note: The first argument to null_ls `args` MUST be the docker-compose service name
+# In the example below, this is "web", but might be app, my_app, sidekiq, etc..
+
+# example:
+# lua << EOF
+# -- Null-ls configuration
+# local null_ls = require("null-ls")
+
+# local null_ls_sources = {
+#   null_ls.builtins.diagnostics.standardrb.with({
+#     command = "docker-compose-exec",
+#     args = { "web","standardrb"," --no-fix", "-f", "json", "--stdin", "$FILENAME" },
+#   }),
+#   null_ls.builtins.formatting.standardrb.with({
+#     command = "docker-compose-exec",
+#     args = { "web,"standardrb"," --fix", "--format", "quiet", "--stderr", "--stdin", "$FILENAME" },
+#   }),
+# }
+# null_ls.register(null_ls_sources)
+# EOF
+service_name="$1"
+shift
+docker-compose exec -T "$service_name" sh -c "$*"

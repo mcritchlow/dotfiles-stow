@@ -1,0 +1,30 @@
+# vim: set ft=conf:
+#
+exec wl-paste -t text --watch clipman store
+# Setup wlsunset with hard-coded gps coordinates
+exec wlsunset -l 33.06 -L -117.3
+
+# TODO: figure out why service isn't working..
+exec kanshi >/tmp/kanshi.log 2>&1
+# Set gtk-3 themes
+# should eventually be fixed via: https://github.com/swaywm/wlroots/pull/1324
+exec_always wayland-gsettings
+
+# Setup scratchpad terminal after Kanshi
+exec $term --class scratchpad
+
+# sway does not set DISPLAY/WAYLAND_DISPLAY in the systemd user environment
+# See FS#63021
+# Adapted from xorg's 50-systemd-user.sh, which achieves a similar goal.
+# exec systemctl --user import-environment BROWSER MOZ_DBUS_REMOTE WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+# exec hash dbus-update-activation-environment 2>/dev/null && \
+#      dbus-update-activation-environment --systemd BROWSER MOZ_DBUS_REMOTE WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+# exec systemd-notify --ready
+
+
+# Maybe replaces above?
+exec systemctl --user import-environment BROWSER MOZ_DBUS_REMOTE WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+exec "hash dbus-update-activation-environment 2>/dev/null; \
+     dbus-update-activation-environment --all; \
+     dbus-update-activation-environment --systemd; \
+     systemctl --user start sway-session.target"

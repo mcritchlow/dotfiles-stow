@@ -1,0 +1,93 @@
+# $XDG_CONFIG_HOME/k9s/plugin.yml
+# $RESOURCE_GROUP -- the selected resource group
+# $RESOURCE_VERSION -- the selected resource api version
+# $RESOURCE_NAME -- the selected resource name
+# $NAMESPACE -- the selected resource namespace
+# $NAME -- the selected resource name
+# $CONTAINER -- the current container if applicable
+# $FILTER -- the current filter if any
+# $KUBECONFIG -- the KubeConfig location.
+# $CLUSTER the active cluster name
+# $CONTEXT the active context name
+# $USER the active user
+# $GROUPS the active groups
+# $POD while in a container view
+# $COL-<RESOURCE_COLUMN_NAME> use a given column name for a viewed resource. Must be prefixed by COL-!
+plugin:
+  helmValuesView:
+    shortCut: v
+    confirm: false
+    description: Values (view)
+    scopes:
+      - helm
+    command: sh
+    background: false
+    args:
+    - -c
+    - "helm get values $COL-NAME -n $NAMESPACE --kube-context $CONTEXT | less"
+
+  helmValuesCopy:
+    shortCut: Shift-C
+    confirm: false
+    description: Values (copy)
+    scopes:
+      - helm
+    command: sh
+    background: false
+    args:
+    - -c
+    - "helm get values $COL-NAME -n $NAMESPACE --kube-context $CONTEXT | wl-copy -n"
+
+  helmDeleteAllInNamespace:
+    shortCut: Shift-D
+    confirm: false
+    description: Delete (Helm Releases)
+    scopes:
+      - ns
+    command: sh
+    background: false
+    args:
+    - -c
+    - "helm list -n $NAMESPACE --kube-context $CONTEXT -q | xargs -L1 helm delete -n $NAMESPACE --kube-context $CONTEXT"
+
+  deleteAndCreateNamespace:
+    shortCut: Ctrl-X
+    confirm: false
+    description: Recreate (delete and create)
+    scopes:
+      - ns
+    command: sh
+    background: false
+    args:
+    - -c
+    - "helm delete namespace $NAMESPACE --kube-context $CONTEXT && helm create $NAMESPACE --kube-context $CONTEXT "
+
+  # createDebugPod:
+  #   shortCut: Shift-E
+  #   confirm: false
+  #   description: Create Debug Pod
+  #   scopes:
+  #     - pods
+  #   command: sh
+  #   background: false
+  #   args:
+  #   - -c
+  #   - "kubectl run ephemeral-pod --image=k8s.gcr.io/pause --restart=Never --namespace=$NAMESPACE --context=$CONTEXT"
+  #
+  # TODO: this doesn't work, returns immediately. maybe we can't run an interactive shell like this
+  # shellDebugPod:
+  #   shortCut: Shift-D
+  #   confirm: false
+  #   description: Debug (shell)
+  #   scopes:
+  #     - pods
+  #   command: kubectl
+  #   background: false
+  #   args:
+  #   - debug
+  #   - -it
+  #   - ephemeral-pod
+  #   - --image=alpine:latest
+  #   - --target=ephemeral-pod
+  #   - --namespace=$NAMESPACE
+  #   - --context=$CONTEXT

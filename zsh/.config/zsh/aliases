@@ -1,0 +1,96 @@
+# vim: filetype=sh:
+# Aliases
+# --------------------------------------------------------------------
+
+# navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias cd.='cd ..'
+alias cd..='cd ..'
+alias cat='bat'
+alias ls='eza'
+alias l='eza --all --long --git --header --group --classify'
+alias lss='eza --all --long --reverse --sort=size --header --group'
+alias tree='eza --all --tree'
+alias sls="stat -c '%n (%F) %a %A' *"
+alias swapcaps='setxkbmap -option caps:swapescape' #when no kinesis
+
+# dirs
+alias gm="cd ~/Music/"
+alias gpx="cd ~/Pictures/"
+alias gvd="cd ~/Videos/"
+alias gdn="cd ~/Downloads/"
+alias gdo="cd ~/Documents/"
+
+# projects
+alias gd="cd ~/projects/personal/dotfiles/"
+alias gdv="cd ~/projects/personal/dotfiles/ && nvim"
+# project bases
+alias gw="cd ~/projects/ucsd/"
+alias gp="cd ~/projects/personal/"
+alias gaur="cd ~/projects/aur/"
+
+# operational
+alias t="imv ."
+alias o='xdg-open'
+alias vim='nvim'
+alias vimdiff='nvim -d'
+alias v='nvim'
+alias vi='nvim'
+alias vi2='vi -O2 '
+alias hc="history -c"
+alias which='type -p'
+alias k5='kill -9 %%'
+alias gst='git status'
+alias gbda='git branch --no-color --merged | command grep -vE "^(\*|\s*(master|develop|dev)\s*$)" | command xargs -n 1 git branch -d'
+alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
+alias memhogs='ps axc -o cmd:15,%mem --sort=-%mem | head'
+alias cpuhogs='ps axc -o cmd:15,%cpu --sort=-%cpu | head'
+alias weather='curl "wttr.in?0T"'
+alias pause-notifications='killall -SIGUSR1 dunst'
+alias resume-notifications='killall -SIGUSR2 dunst'
+
+# distrobox
+alias dbox-create='distrobox assemble create --file ~/.config/distrobox/arch-manifest.ini'
+alias dbox-rm='distrobox assemble rm --file ~/.config/distrobox/arch-manifest.ini'
+
+# arch
+# TODO: don't use playbook here, run a system update task directly
+alias pacman-update="ansible localhost -m pacman -a 'update_cache=yes upgrade=yes'"
+# alias pacman-update="clear && && ansible-playbook ~/projects/personal/laptop/packages.yml"
+alias aur-update="clear && ansible-playbook ~/projects/personal/laptop/aur.yml"
+alias checkupdates="checkupdates | column -t | more"
+alias aur-update-work="clear && echo AUR time! | figlet && cd ~/projects/personal/laptop/ && ansible-playbook aur.yml"
+alias orphans="pacman -Qdt"
+alias remove-orphans="sudo pacman -Rns \$(pacman -Qtdq)"
+alias reflector-update="sudo reflector --country 'United States' --latest 200 --age 24 --sort rate --save /etc/pacman.d/mirrorlist"
+
+# Tmux
+alias tls="tmux ls"
+alias td="tmux detach"
+alias tms="tmux new-session -s $(date +'%A')"
+
+# Lastpass
+alias lplogin='lpass login --trust matt@critchlow.xyz'
+alias lploginwork='lpass login --trust mcritchlow@ucsd.edu'
+
+# light shortcuts
+alias br100='light -S 100'
+alias br50='light -S 50'
+alias br25='light -S 25'
+
+# Music (mpd + mpc)
+alias mpcPlaylistReset='mpc update --wait && mpc clear && mpc ls | mpc add'
+
+# Cowsay + Ansible
+alias ansible-playbook-random='ANSIBLE_COW_SELECTION=random ansible-playbook'
+alias ansible-playbook-tux='ANSIBLE_COW_SELECTION=tux ansible-playbook'
+
+# Docker
+alias docker-nuke='docker system prune -f --all --volumes'
+
+# Flatpak
+alias fpu='flatpak update --noninteractive'

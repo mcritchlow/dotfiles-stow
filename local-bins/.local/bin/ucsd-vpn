@@ -1,0 +1,9 @@
+#!/bin/sh
+# GROUP="2-Step Secured - allthruucsd"
+GROUP="2-Step Secured - split"
+USERNAME="mcritchlow@library"
+VPN_SERVER="vpn.ucsd.edu"
+PIDFILE=/run/openconnect_vpn.pid
+
+PASS=$(pass show matt@critchlow.xyz/Mail/UCSDMail | head -n1)
+echo "$PASS" | sudo /usr/bin/openconnect --authgroup="$GROUP" --background --pid-file="$PIDFILE" --user="$USERNAME" --passwd-on-stdin "$VPN_SERVER"

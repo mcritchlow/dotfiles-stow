@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+# Used for local .nvimrc setup for vim-test
+# Note: The first argument MUST be the docker-compose service name
+# In the example below, this is "web", but might be app, my_app, sidekiq, etc..
+
+# example:
+# let test#ruby#rspec#executable = 'docker-compose-test web'
+service_name="$1"
+shift
+docker-compose exec "$service_name" sh -c "bundle exec rspec $*"

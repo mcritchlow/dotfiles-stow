@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+extra_configs_folder="${HOME}/.kube/configs"
+
+chosen=$(printf "default\\nrancher-ucsd-review\\nrancher-ucsd-prod" | bemenu -i -p "Choose kubeconfig")
+
+case "$chosen" in
+  default) k9s ;;
+  *) k9s --kubeconfig "${extra_configs_folder}/${chosen}" ;;
+esac

@@ -1,0 +1,9 @@
+profile ultrafancy {
+	output eDP-1 disable
+	output "Dell Inc. DELL U2722DE B8N0BH3" position 0,0
+	exec swaymsg workspace 1, move workspace to "Dell Inc. DELL U2722DE B8N0BH3"
+}
+
+profile laptop {
+	output eDP-1 mode 1920x1080
+}

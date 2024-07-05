@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+shopt -s nullglob globstar
+
+prefix=${PASSWORD_STORE_DIR-~/.password-store}
+password_files=( "$prefix"/**/*.gpg )
+password_files=( "${password_files[@]#"$prefix"/}" )
+password_files=( "${password_files[@]%.gpg}" )
+
+password=$(printf '%s\n' "${password_files[@]}" | bemenu -p password -i -l 20 "$@")
+
+[[ -n $password ]] || exit
+
+# username
+pass show "$password" | grep username | cut -d ' ' -f2 | tr '\n' '\0' | wl-copy
+# password
+pass show -c "$password" 2>/dev/null
