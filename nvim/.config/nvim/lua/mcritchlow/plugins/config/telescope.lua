@@ -110,7 +110,7 @@ M = {}
 M.search_dotfiles = function()
   require("telescope.builtin").find_files({
     prompt_title = "< VimRC >",
-    cwd = "$HOME/projects/personal/dotfiles",
+    cwd = "$HOME/projects/personal/dotfiles-stow",
   })
 end
 
