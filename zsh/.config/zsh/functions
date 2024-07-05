@@ -51,12 +51,6 @@ gpg-reload-agent() {
   gpg-connect-agent updatestartuptty /bye >/dev/null
 }
 
-# Arch related
-# remove program as well as dependencies and system configs
-pacman-remove() {
-  sudo pacman -Rns "$1"
-}
-
 # Kill pid using bemenu
 killpid ()
 {
@@ -72,41 +66,6 @@ lpass-switch-account() {
   local account="${1-work}"
   rm -rf ~/.local/share/lpass
   ln -fs ~/.local/share/$account ~/.local/share/lpass
-}
-
-wttr() {
-    # change Paris to your default location
-    local request="wttr.in/${1-92024}"
-    [ "$COLUMNS" -lt 125 ] && request+='?n'
-    curl -H "Accept-Language: ${LANG%_*}" --compressed "$request"
-}
-
-bundler-search() {
-  # Search your bundle for the provided pattern
-  #   Requires bundler 1.8+ for execution as a bundler subcommand.
-  #   Examples:
-  #     bundle search Kernal.warn
-  #     bundle search current_user clearance
-  #     bundle search "Change your password" clearance
-  #
-  # Arguments:
-  #  1. What to search for
-  #  2. Which gem names to search (defaults to all gems)
-
-  pattern="$1"; shift
-  rg "$pattern" "$(bundle show --paths "$@")"
-}
-
-# update personal repos
-update-personal-repos() {
-  local current_path=$(pwd)
-  local project_base=~/projects/personal
-  local projects=('dotfiles' 'laptop' 'sync-stuff')
-  for project in $projects
-  do
-    cd "$project_base/$project" && git pull origin trunk
-  done
-  cd "$current_path" || return
 }
 
 # A function to extract correctly any archive based on extension
@@ -132,17 +91,6 @@ extract() {
     fi
 }
 
-# Replace a A/V file metadata title with one that has no emojis
-# This is needed because dwm barfs horrendously when emojis are in the metadata title/window
-ffmpeg-emoji-fix() {
-  local input_file="$1"; shift
-  local output_file="$1"
-  local file_suffix
-  file_suffix=$(echo "$input_file" | awk -F '.' '{ print $2 }')
-
-  ffmpeg -i "$input_file" -metadata title="$output_file" -acodec copy -vcodec copy "$output_file.$file_suffix"
-}
-
 # invoke ctags hook in git repository
 git-ctags() {
   [ -f .git/hooks/ctags ] || git init
@@ -163,24 +111,6 @@ lpp () {
 #   [ "$1" ] && "cd *$1*" || return
 # }
 
-csbuild() {
-  [ $# -eq 0 ] && return
-
-  cmd="find $(pwd)"
-  for ext in "$@"; do
-    cmd=" $cmd -name '*.$ext' -o"
-  done
-  echo ${cmd: 0: ${#cmd} - 3}
-  eval "${cmd: 0: ${#cmd} - 3}" > cscope.files &&
-  cscope -b -q && rm cscope.files
-}
-
-tx() {
-  tmux splitw "$*; echo -n Press enter to finish.; read"
-  tmux select-layout tiled
-  tmux last-pane
-}
-
 gitzip() {
   git archive -o $(basename $PWD).zip HEAD
 }
@@ -200,10 +130,6 @@ gitdiffb() {
 }
 
 alias gitv='git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-
-EXTRA=$BASE/bashrc-extra
-[ -f "$EXTRA" ] && source "$EXTRA"
-
 
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
