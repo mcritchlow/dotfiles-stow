@@ -35,7 +35,7 @@ telescope.setup {
   },
   pickers = {
     find_files = {
-      find_command = { "fd", "--ignore", "-L", "-tf", "-tl", "--strip-cwd-prefix" }
+      find_command = { "fd", "-H", "-L", "-tf", "-tl", "--strip-cwd-prefix" }
     },
   },
   defaults = {
