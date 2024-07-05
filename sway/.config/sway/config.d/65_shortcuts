@@ -11,12 +11,12 @@ bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym --locked XF86AudioPrev exec playerctl previous
 bindsym --locked XF86AudioStop exec playerctl stop
 # brightness controls
-bindsym --locked XF86MonBrightnessDown exec /usr/bin/light -U 10
-bindsym --locked XF86MonBrightnessUp exec /usr/bin/light -A 10
+bindsym --locked XF86MonBrightnessDown exec /usr/bin/brightnessctl s -10%
+bindsym --locked XF86MonBrightnessUp exec /usr/bin/brightnessctl s +10
 
 # notifications
-bindsym Control+Space exec makoctl dismiss
-bindsym $mod+Shift+Space exec makoctl dismiss --all
+bindsym Control+Space exec dunstctl close
+bindsym $mod+Shift+Space exec dunstctl close-all
 
 # start a terminal in current window
 bindsym $mod+t exec $term
