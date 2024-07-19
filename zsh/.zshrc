@@ -7,9 +7,10 @@ promptinit
 
 setopt promptsubst COMPLETE_ALIASES extendedglob hist_ignore_all_dups hist_ignore_space share_history
 
-# Things to source
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
+# we may not have fzf on silverblue host
+[[ -f /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
+[[ -f /usr/share/fzf/completion.zsh ]] && source /usr/share/fzf/completion.zsh
+
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh/functions
 [[ -f ~/.config/zsh/functions.local ]] && source ~/.config/zsh/functions.local
@@ -20,10 +21,10 @@ source ~/.config/zsh/aliases
 typeset -g ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=3'
 
 # Set GPG TTY
-GPG_TTY=$(tty)
-export GPG_TTY
+# GPG_TTY=$(tty)
+# export GPG_TTY
 # Refresh gpg-agent tty in case user switches into an X session
-gpg-connect-agent updatestartuptty /bye >/dev/null
+# gpg-connect-agent updatestartuptty /bye >/dev/null
 
 # autocompletion with an arrow-key driven interface
 zstyle ':completion:*' menu select
@@ -48,5 +49,10 @@ bindkey "^E" end-of-line
 bindkey '^F' fzf-cd-widget #override Alt-C (because DWM..)
 
 # Per readme, source highlighting last since it wraps ZLE widgets
+source ~/.config/zsh/theme-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-eval "$(starship init zsh)"
+
+if command -v starship &> /dev/null
+then
+  eval "$(starship init zsh)"
+fi
