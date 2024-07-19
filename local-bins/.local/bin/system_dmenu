@@ -3,35 +3,9 @@
 # dmenu script for managing systemctl
 chosen=$(printf "lock\\nexit\\nreboot\\nshutdown" | rofi -dmenu -i -p "Systemctl Options")
 
-# commit any sync-stuff changes prior to lock/reboot/shutdown
-commit_sync_changes() {
-  # return immediately if network is down
-  iface=$(ip link show | grep -Eo 'wlan[[:alnum:]]+')
-  if ip link show "$iface" | grep -q 'DOWN'; then echo "no internet connection" && return; fi
-
-  cd ~/projects/personal/sync-stuff || return
-  changes=$(git status --porcelain=v1 | wc -l)
-  if [ "$changes" = 0 ]; then echo "there are no changes to sync" && return; fi
-  git add .
-  git commit -m "auto-commit"
-  git push origin trunk
-
-}
-
-# kill vpn if running on reboot or shutdown
-# why: it leaves an unusable resolv.conf
-kill_vpn() {
-  vpn_pid=$(pidof openconnect)
-  if [ "$vpn_pid" ]; then
-    sudo kill "$vpn_pid"
-    # replace resolve.conf, as killing openconnect doesn't seem to always work
-    sudo cp /tmp/resolv.conf /etc/resolv.conf
-  fi
-}
-
 case "$chosen" in
-  exit) commit_sync_changes && swaymsg exit ;;
-  lock) commit_sync_changes && swaylock -c 000000 ;;
-  reboot) commit_sync_changes && kill_vpn && systemctl reboot ;;
-  shutdown) commit_sync_changes && kill_vpn && systemctl poweroff -i ;;
+  exit) swaymsg exit ;;
+  lock) swaylock -c 000000 ;;
+  reboot) systemctl reboot ;;
+  shutdown) systemctl poweroff -i ;;
 esac
