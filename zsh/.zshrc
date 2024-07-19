@@ -11,7 +11,7 @@ setopt promptsubst COMPLETE_ALIASES extendedglob hist_ignore_all_dups hist_ignor
 [[ -f /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
 [[ -f /usr/share/fzf/completion.zsh ]] && source /usr/share/fzf/completion.zsh
 
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh/functions
 [[ -f ~/.config/zsh/functions.local ]] && source ~/.config/zsh/functions.local
 source ~/.config/zsh/aliases
@@ -50,7 +50,7 @@ bindkey '^F' fzf-cd-widget #override Alt-C (because DWM..)
 
 # Per readme, source highlighting last since it wraps ZLE widgets
 source ~/.config/zsh/theme-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 if command -v starship &> /dev/null
 then
