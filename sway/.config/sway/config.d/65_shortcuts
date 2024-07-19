@@ -29,6 +29,6 @@ bindsym $mod+Shift+c reload
 # Menus for bemenu/dmenu
 bindsym $mod+r exec $menu
 bindsym $mod+p exec $local_bin/passmenu_dmenu
-bindsym $mod+c exec clipman pick -t rofi -dmenu
+bindsym $mod+c exec clipman pick -t rofi -T'-dmenu'
 bindsym $mod+Shift+x exec $local_bin/system_dmenu
 bindsym $mod+Shift+p exec $local_bin/scrotsel_dmenu
