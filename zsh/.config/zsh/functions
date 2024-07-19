@@ -51,11 +51,11 @@ gpg-reload-agent() {
   gpg-connect-agent updatestartuptty /bye >/dev/null
 }
 
-# Kill pid using bemenu
+# Kill pid
 killpid ()
 {
   local pid_to_kill
-  pid_to_kill="$(ps -eo pid,cmd | bemenu -p 'PID to kill: ' -l 25 | tr -s ' ' | cut -d ' ' -f2)"
+  pid_to_kill="$(ps -eo pid,cmd | rofi -dmenu -p 'PID to kill: ' -l 25 | tr -s ' ' | cut -d ' ' -f2)"
   sudo kill "$pid_to_kill"
 }
 
@@ -241,7 +241,7 @@ fmusic() {
   Steezy - Coffee Shop radio | https://youtu.be/-5KAN9_CzSA
   Steezy - Beats to sleep/study to | https://www.youtube.com/watch?v=9_CcYN8MVO8
   Aplitude - Rainy Days in Tokyo | https://youtu.be/ivNIpLdzh7M"
-  stream=$(echo "$streams" | bemenu -p 'YouTube Stream: ' -l 10 | cut -d '|' -f 2 | tr -d ' ')
+  stream=$(echo "$streams" | rofi -dmenu -p 'YouTube Stream: ' -l 10 | cut -d '|' -f 2 | tr -d ' ')
   setsid mpv --video=no --quiet "$stream" >/dev/null 2>&1 &
 }
 

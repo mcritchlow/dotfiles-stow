@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # dmenu script for managing systemctl
-chosen=$(printf "lock\\nexit\\nreboot\\nshutdown" | bemenu -i -p "Systemctl Options")
+chosen=$(printf "lock\\nexit\\nreboot\\nshutdown" | rofi -dmenu -i -p "Systemctl Options")
 
 # commit any sync-stuff changes prior to lock/reboot/shutdown
 commit_sync_changes() {
