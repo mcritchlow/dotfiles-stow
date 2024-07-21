@@ -5,5 +5,5 @@ profile ultrafancy {
 }
 
 profile laptop {
-	output eDP-1 mode 1920x1080
+	output eDP-1 mode 2256x1504
 }
