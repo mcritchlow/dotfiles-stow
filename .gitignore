@@ -1,0 +1,7 @@
+gnupg/.gnupg/.gpg-connect_history
+gnupg/.gnupg/private-keys-v1.d/
+gnupg/.gnupg/pubring.kbx
+gnupg/.gnupg/pubring.kbx~
+gnupg/.gnupg/tofu.db
+gnupg/.gnupg/trustdb.gpg
+nvim/.config/nvim/lazy-lock.json
