@@ -13,6 +13,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  -- see: https://github.com/junegunn/fzf/blob/master/install
+  {
+    "junegunn/fzf",
+    "fzf",
+    build = "./install --all --xdg --no-fish --no-bash"
+  },
   {
     "catppuccin/nvim",
     -- lazy = false, -- make sure we load this during startup if it is your main colorscheme
