@@ -15,6 +15,4 @@ set $term foot
 set $rofi_cmd rofi -terminal '$term'
 set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
 
-font pango:$font_family $font_size
-
 include '$($LIBEXECDIR/sway/layered-include "$DATADIR/sway/config.d/*.conf" "$SYSCONFDIR/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
