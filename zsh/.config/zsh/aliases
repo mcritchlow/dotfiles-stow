@@ -52,8 +52,8 @@ alias pause-notifications='killall -SIGUSR1 dunst'
 alias resume-notifications='killall -SIGUSR2 dunst'
 
 # distrobox
-alias dbox-create='distrobox assemble create --file ~/.config/distrobox/arch-manifest.ini'
-alias dbox-rm='distrobox assemble rm --file ~/.config/distrobox/arch-manifest.ini'
+alias dbox-create='distrobox assemble create --file ~/.config/distrobox/distrobox.ini'
+alias dbox-rm='distrobox assemble rm --file ~/.config/distrobox/distrobox.ini'
 
 # sway
 alias enable-laptop-screen="swaymsg 'output eDP-1 enable'"
