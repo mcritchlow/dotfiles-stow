@@ -5,3 +5,4 @@ gnupg/.gnupg/pubring.kbx~
 gnupg/.gnupg/tofu.db
 gnupg/.gnupg/trustdb.gpg
 nvim/.config/nvim/lazy-lock.json
+local-bins/.local/bin/starship
