@@ -52,6 +52,18 @@ bindkey '^F' fzf-cd-widget #override Alt-C (because DWM..)
 source ~/.config/zsh/theme-highlighting.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# for foot pipe-command-output
+# see: https://codeberg.org/dnkl/foot/wiki#piping-last-command-s-output
+# see: https://codeberg.org/dnkl/foot#piping-last-command-s-output
+function precmd {
+    if ! builtin zle; then
+        print -n "\e]133;D\e\\"
+    fi
+}
+function preexec {
+    print -n "\e]133;C\e\\"
+}
+
 if command -v starship &> /dev/null
 then
   eval "$(starship init zsh)"
