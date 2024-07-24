@@ -48,8 +48,8 @@ alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
 alias memhogs='ps axc -o cmd:15,%mem --sort=-%mem | head'
 alias cpuhogs='ps axc -o cmd:15,%cpu --sort=-%cpu | head'
 alias weather='curl "wttr.in?0T"'
-alias pause-notifications='killall -SIGUSR1 dunst'
-alias resume-notifications='killall -SIGUSR2 dunst'
+alias pause-notifications='dunstctl set-paused true'
+alias resume-notifications='dunstctl set-paused false'
 
 # distrobox
 alias dbox-create='distrobox assemble create --file ~/.config/distrobox/distrobox.ini'
