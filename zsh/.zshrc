@@ -8,8 +8,8 @@ promptinit
 setopt promptsubst COMPLETE_ALIASES extendedglob hist_ignore_all_dups hist_ignore_space share_history
 
 # we may not have fzf on silverblue host
-[[ -f /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
-[[ -f /usr/share/fzf/completion.zsh ]] && source /usr/share/fzf/completion.zsh
+[[ -f /usr/share/fzf/shell/key-bindings.zsh ]] && source /usr/share/fzf/shell/key-bindings.zsh
+[[ -f /usr/share/zsh/site-functions/fzf ]] && source /usr/share/zsh/site-functions/fzf
 
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh/functions
