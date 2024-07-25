@@ -72,7 +72,6 @@ local servers = {
   "gopls",
   "jsonls",
   "lua_ls",
-  "standardrb",
   "yamlls",
 }
 
