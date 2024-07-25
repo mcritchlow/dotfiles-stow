@@ -51,6 +51,11 @@ gpg-reload-agent() {
   gpg-connect-agent updatestartuptty /bye >/dev/null
 }
 
+# unlock keys
+unlock-keys() {
+  pass show ucsdemail > /dev/null && ssh-add ~/.ssh/id_rsa_work
+}
+
 # Kill pid
 killpid ()
 {
