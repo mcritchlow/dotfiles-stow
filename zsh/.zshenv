@@ -14,6 +14,7 @@ fi
 
 # To use podman, as docker, within containers via docker compose
 export DOCKER_HOST=unix:///run/user/1000/podman/podman.sock
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
 
 export WWW_HOME="https://duckduckgo.com"
 export EDITOR="nvim"
