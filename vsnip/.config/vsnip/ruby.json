@@ -1,0 +1,10 @@
+{
+  "pry": {
+    "prefix": ["pry"],
+    "body": ["require 'pry'", "binding.pry"]
+  },
+  "debug": {
+    "prefix": ["debug"],
+    "body": ["require 'debug'", "binding.break"]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "errors": {
+    "prefix": [
+      "ie"
+    ],
+    "body": [
+      "if err != nil {",
+      "    panic(err.Error())",
+      "}"
+    ]
+  }
+}
