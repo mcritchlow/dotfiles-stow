@@ -124,26 +124,23 @@ _M.lsp_keymaps = function(bufnr)
     local opts = { buffer = bufnr }
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     --
-    wk.register({
-        ["<leader>l"] = {
-            D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "[LSP] Hover" },
-            d = { "<cmd>Telescope lsp_definitions<cr>", "[LSP] Definitions" },
-            td = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "[LSP] Type Definition" },
-            h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "[LSP] Hover" },
-            n = { "<cmd>lua vim.lsp.buf.rename()<cr>", "[LSP] Rename" },
-            r = { "<cmd>Telescope lsp_references<cr>", "[LSP] References" },
-            i = { "<cmd>Telescope lsp_implementations<cr>", "[LSP] Implementations" },
-            ca = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "[LSP] Code Actions" },
-            so = { "<cmd>Telescope lsp_document_symbols<cr>", "[LSP] Document Symbols" },
-            sh = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "[LSP] Signature Help" },
-        }
-    }, wk_opts)
+    wk.add({
+        { "<leader>lD",  "<cmd>lua vim.lsp.buf.declaration()<cr>",     buffer = 1, desc = "[LSP] Hover",            nowait = true, remap = false },
+        { "<leader>lca", "<cmd>lua vim.lsp.buf.code_action()<cr>",     buffer = 1, desc = "[LSP] Code Actions",     nowait = true, remap = false },
+        { "<leader>ld",  "<cmd>Telescope lsp_definitions<cr>",         buffer = 1, desc = "[LSP] Definitions",      nowait = true, remap = false },
+        { "<leader>lh",  "<cmd>lua vim.lsp.buf.hover()<cr>",           buffer = 1, desc = "[LSP] Hover",            nowait = true, remap = false },
+        { "<leader>li",  "<cmd>Telescope lsp_implementations<cr>",     buffer = 1, desc = "[LSP] Implementations",  nowait = true, remap = false },
+        { "<leader>ln",  "<cmd>lua vim.lsp.buf.rename()<cr>",          buffer = 1, desc = "[LSP] Rename",           nowait = true, remap = false },
+        { "<leader>lr",  "<cmd>Telescope lsp_references<cr>",          buffer = 1, desc = "[LSP] References",       nowait = true, remap = false },
+        { "<leader>lsh", "<cmd>lua vim.lsp.buf.signature_help()<cr>",  buffer = 1, desc = "[LSP] Signature Help",   nowait = true, remap = false },
+        { "<leader>lso", "<cmd>Telescope lsp_document_symbols<cr>",    buffer = 1, desc = "[LSP] Document Symbols", nowait = true, remap = false },
+        { "<leader>ltd", "<cmd>lua vim.lsp.buf.type_definition()<cr>", buffer = 1, desc = "[LSP] Type Definition",  nowait = true, remap = false },
+    })
 
-    wk.register({
-        ["<leader>l"] = {
-            ca = { "<cmd>lua vim.lsp.buf.range_code_action()<CR>", "[LSP] Code Actions" },
-        }
-    }, vwk_opts)
+    wk.add({
+        { "<leader>lca", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", buffer = 1, desc = "[LSP] Code Actions", mode = "v", nowait = true, remap = false },
+    }
+    )
 
     -- wk.reg
 
