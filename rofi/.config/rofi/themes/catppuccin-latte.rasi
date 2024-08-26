@@ -8,7 +8,7 @@
     fg-col2: #d20f39;
     grey: #9ca0b0;
 
-    width: 600;
+    width: 800;
     font: "JetBrainsMono Nerd Font 14";
 }
 
@@ -18,7 +18,7 @@ element-text, element-icon , mode-switcher {
 }
 
 window {
-    height: 360px;
+    height: 400px;
     border: 3px;
     border-color: @border-col;
     background-color: @bg-col;
@@ -59,8 +59,8 @@ listview {
     border: 0px 0px 0px;
     padding: 6px 0px 0px;
     margin: 10px 0px 0px 20px;
-    columns: 2;
-    lines: 5;
+    columns: 1;
+    lines: 10;
     background-color: @bg-col;
 }
 
