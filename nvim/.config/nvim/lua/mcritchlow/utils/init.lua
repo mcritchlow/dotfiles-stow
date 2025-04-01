@@ -61,6 +61,16 @@ _M.setup_null_ls = function(service, cwd_suffix)
     }
     null_ls.register(null_ls_sources)
 end
+--
+-- Setup null-ls to use golangci_lint for lint/format in go projects
+_M.setup_null_ls_go = function()
+    cwd_suffix = cwd_suffix or ""
+    -- Null-ls configuration
+    local null_ls = require("null-ls")
+
+    local null_ls_sources = { null_ls.builtins.diagnostics.golangci_lint }
+    null_ls.register(null_ls_sources)
+end
 
 -- Example usage
 -- utils.set_spaces_size{ go = 4, ruby = 2, python = 4, java = 4 }
