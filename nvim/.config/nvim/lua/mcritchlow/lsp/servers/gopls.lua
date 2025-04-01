@@ -14,10 +14,19 @@ M.setup = function(on_attach, capabilities)
         snippetSupport = true,
         resolveSupport = {
           properties = {
+            "edit",
             "documentation",
             "details",
             "additionalTextEdits",
           },
+        },
+      },
+      completionList = {
+        itemDefaults = {
+          "editRange",
+          "insertTextFormat",
+          "insertTextMode",
+          "data",
         },
       },
       contextSupport = true,
@@ -67,9 +76,26 @@ M.setup = function(on_attach, capabilities)
     },
     settings = {
       gopls = {
-        analyses = { unusedparams = true, unreachable = false },
+        -- analyses = { unusedparams = true, unreachable = false },
+        analyses = {
+          append = true,
+          asmdecl = true,
+          assign = true,
+          atomic = true,
+          unreachable = true,
+          nilness = true,
+          ST1003 = true,
+          undeclaredname = true,
+          fillreturns = true,
+          nonewvars = true,
+          shadow = true,
+          unusedvariable = true,
+          unusedparams = true,
+          useany = true,
+          unusedwrite = true,
+        },
         codelenses = {
-          generate = true, -- show the `go generate` lens.
+          generate = true,    -- show the `go generate` lens.
           gc_details = false, --  // Show a code lens toggling the display of gc's choices.
           test = true,
           tidy = true,
