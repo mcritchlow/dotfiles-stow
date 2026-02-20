@@ -34,6 +34,24 @@ _M.setup_standardrb = function(service, cwd_suffix)
     }
 end
 
+_M.setup_standardrb_bundle = function(service, cwd_suffix)
+    cwd_suffix = cwd_suffix or ""
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    local on_attach = function(client, bufnr)
+        require("mcritchlow.utils").lsp_keymaps(bufnr)
+    end
+    local lspconfig = require "lspconfig"
+
+    lspconfig.standardrb.setup {
+        on_attach = on_attach,
+        cmd = { "docker-compose-exec", service,"bundle", "exec", "standardrb", "--lsp" },
+        flags = {
+            debounce_text_changes = 150,
+        },
+        capabilities = capabilities,
+    }
+end
+
 -- Setup null-ls to use standardrb for lint/format
 -- @parameter service -- docker service name (usually app or web)
 -- @parameter cwd_suffix -- subpath to project if not in the root of git repo (surfliner)

@@ -8,4 +8,4 @@
 # let test#ruby#rspec#executable = 'docker-compose-test web'
 service_name="$1"
 shift
-docker-compose exec "$service_name" sh -c "bundle exec rspec $*"
+docker-compose exec "$service_name" sh -c "RAILS_ENV=test bundle exec rspec $*"
