@@ -53,7 +53,13 @@ gpg-reload-agent() {
 
 # unlock keys
 unlock-keys() {
-  pass show ucsdemail > /dev/null && ssh-add ~/.ssh/id_rsa_work
+  pass show ucsdemail > /dev/null && ssh-add -vvv ~/.ssh/id_rsa_work
+}
+
+# setup libvirtd and virsh for vagrant dev
+# MUST be run from the host (not distrobox container)
+vagrant-dev-setup() {
+  sudo systemctl start libvirtd && sudo virsh net-start default
 }
 
 # Kill pid

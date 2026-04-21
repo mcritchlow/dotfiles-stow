@@ -30,3 +30,8 @@ export LPASS_AGENT_TIMEOUT=0
 export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/starship/config.toml"
 # Bat theme (it defaults to a dark theme)
 export BAT_THEME="GitHub"
+
+# We always only use libvirt for Vagrant
+# then we don't have a pass a --provider=libvirt when doing vagrant up
+export VAGRANT_DEFAULT_PROVIDER=libvirt
+

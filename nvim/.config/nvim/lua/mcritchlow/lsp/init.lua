@@ -66,6 +66,7 @@ mason.setup {
 }
 
 local servers = {
+  "ansiblels",
   "bashls",
   "docker_compose_language_service",
   "dockerls",
