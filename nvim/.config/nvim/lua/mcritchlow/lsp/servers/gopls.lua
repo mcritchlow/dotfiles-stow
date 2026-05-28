@@ -44,7 +44,7 @@ M.setup = function(_on_attach, capabilities)
   local keymaps_func = require("mcritchlow.utils").keymaps
 
   go.setup({
-    gopls_cmd = { vim.fn.stdpath 'data' .. 'lsp_servers/gopls/gopls' },
+    gopls_cmd = { vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin', 'gopls') },
     fillstruct = 'gopls',
     dap_debug = true,
     dap_debug_gui = true,
