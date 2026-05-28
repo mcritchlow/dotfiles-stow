@@ -3,6 +3,7 @@ local ok, null_ls = pcall(require, "null-ls")
 if not ok then
     return
 end
+-- TODO: setup local nvim file to use gopls for config project
 --
 -- To register project-specific sources:
 -- Set something like the following in a project vimrc.local file

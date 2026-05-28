@@ -14,19 +14,8 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
--- Floating border
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-  opts = opts or {}
-  opts.border = opts.border or { { " ", "FloatBorder" } }
-  return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
-
--- Set borders
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' })
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = 'single',
-})
+-- Border for all floating windows (LSP hover, signature help, etc.)
+vim.o.winborder = "single"
 
 -- we want no virtual_text but show via hover
 vim.diagnostic.config({
@@ -51,6 +40,16 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+-- Shared defaults applied to every LSP server via vim.lsp.config (nvim 0.11+).
+-- Per-server files only need to set server-specific settings.
+vim.lsp.config("*", {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = {
+    debounce_text_changes = 150,
+  },
+})
 
 -- Install LSP servers
 mason.setup {

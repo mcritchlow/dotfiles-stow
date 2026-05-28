@@ -1,15 +1,9 @@
 local M = {}
-M.setup = function(on_attach, capabilities)
-    local lspconfig = require "lspconfig"
-
-    lspconfig.standardrb.setup {
-        on_attach = on_attach,
+M.setup = function(_on_attach, _capabilities)
+    vim.lsp.config("standardrb", {
         cmd = { "standardrb", "--lsp" },
-        flags = {
-            debounce_text_changes = 150,
-        },
-        capabilities = capabilities,
-    }
+    })
+    vim.lsp.enable("standardrb")
 end
 
 return M

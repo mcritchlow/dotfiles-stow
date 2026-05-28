@@ -22,16 +22,16 @@ _M.setup_standardrb = function(service, cwd_suffix)
     local on_attach = function(client, bufnr)
         require("mcritchlow.utils").lsp_keymaps(bufnr)
     end
-    local lspconfig = require "lspconfig"
 
-    lspconfig.standardrb.setup {
+    vim.lsp.config("standardrb", {
         on_attach = on_attach,
         cmd = { "docker-compose-exec", service, "standardrb", "--lsp" },
         flags = {
             debounce_text_changes = 150,
         },
         capabilities = capabilities,
-    }
+    })
+    vim.lsp.enable("standardrb")
 end
 
 _M.setup_standardrb_bundle = function(service, cwd_suffix)
@@ -40,16 +40,16 @@ _M.setup_standardrb_bundle = function(service, cwd_suffix)
     local on_attach = function(client, bufnr)
         require("mcritchlow.utils").lsp_keymaps(bufnr)
     end
-    local lspconfig = require "lspconfig"
 
-    lspconfig.standardrb.setup {
+    vim.lsp.config("standardrb", {
         on_attach = on_attach,
-        cmd = { "docker-compose-exec", service,"bundle", "exec", "standardrb", "--lsp" },
+        cmd = { "docker-compose-exec", service, "bundle", "exec", "standardrb", "--lsp" },
         flags = {
             debounce_text_changes = 150,
         },
         capabilities = capabilities,
-    }
+    })
+    vim.lsp.enable("standardrb")
 end
 
 -- Setup null-ls to use standardrb for lint/format

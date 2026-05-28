@@ -1,19 +1,13 @@
 local M = {}
-M.setup = function(on_attach, capabilities)
-    local lspconfig = require "lspconfig"
-
-    lspconfig.bashls.setup {
-        on_attach = on_attach,
-        flags = {
-            debounce_text_changes = 150,
-        },
-        capabilities = capabilities,
+M.setup = function(_on_attach, _capabilities)
+    vim.lsp.config("bashls", {
         settings = {
             bashIde = {
                 highlightParsingErrors = true -- let shellcheck do this
             }
         }
-    }
+    })
+    vim.lsp.enable("bashls")
 end
 
 return M

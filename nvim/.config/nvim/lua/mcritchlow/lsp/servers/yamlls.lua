@@ -1,14 +1,11 @@
 local M = {}
-M.setup = function(on_attach, capabilities)
-    local lspconfig = require "lspconfig"
-
-    lspconfig.yamlls.setup {
-        on_attach = on_attach,
-        flags = {
-            debounce_text_changes = 150,
-        },
-        capabilities = capabilities,
-        root_dir = require("lspconfig/util").find_git_ancestor,
+M.setup = function(_on_attach, _capabilities)
+    vim.lsp.config("yamlls", {
+        root_dir = function(bufnr, cb)
+            local fname = vim.api.nvim_buf_get_name(bufnr)
+            local root = vim.fs.root(fname ~= "" and fname or bufnr, { ".git" })
+            cb(root or vim.fn.getcwd())
+        end,
         single_file_support = true,
         settings = {
             redhat = { telemetry = { enabled = false } },
@@ -24,7 +21,8 @@ M.setup = function(on_attach, capabilities)
                 },
             },
         },
-    }
+    })
+    vim.lsp.enable("yamlls")
 end
 
 return M

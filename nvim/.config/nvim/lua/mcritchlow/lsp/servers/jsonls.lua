@@ -1,14 +1,16 @@
 local M = {}
-M.setup = function(on_attach, capabilities)
-    local lspconfig = require("lspconfig")
-    local json_caps = capabilities
-    json_caps.textDocument.completion.completionItem.snippetSupport = true
-
-    lspconfig.jsonls.setup {
-        on_attach = on_attach,
-        flags = {
-            debounce_text_changes = 150,
+M.setup = function(_on_attach, capabilities)
+    local json_caps = vim.tbl_deep_extend("force", capabilities or {}, {
+        textDocument = {
+            completion = {
+                completionItem = {
+                    snippetSupport = true,
+                },
+            },
         },
+    })
+
+    vim.lsp.config("jsonls", {
         capabilities = json_caps,
         settings = {
             json = {
@@ -17,7 +19,8 @@ M.setup = function(on_attach, capabilities)
                 schemas = require('schemastore').json.schemas(),
             }
         }
-    }
+    })
+    vim.lsp.enable("jsonls")
 end
 
 return M

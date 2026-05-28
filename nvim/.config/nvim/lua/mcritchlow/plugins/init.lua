@@ -173,17 +173,24 @@ require("lazy").setup({
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    dependencies = {
-      "nvim-treesitter/playground",
-      "nvim-treesitter/nvim-treesitter-textobjects"
-    },
+    branch = "main",
+    -- main branch does not support lazy-loading
+    lazy = false,
     build = ":TSUpdate",
     config = function()
       require("mcritchlow.plugins.config.treesitter")
     end,
   },
   {
-    "norcalli/nvim-colorizer.lua",
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("mcritchlow.plugins.config.treesitter_textobjects")
+    end,
+  },
+  {
+    "catgoose/nvim-colorizer.lua",
     config = function()
       require("mcritchlow.plugins.config.colorizer")
     end,
