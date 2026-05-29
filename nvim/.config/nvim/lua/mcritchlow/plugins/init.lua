@@ -1,6 +1,6 @@
 -- Ensure Lazy is installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -63,12 +63,6 @@ require("lazy").setup({
     init = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 300
-    end,
-  },
-  {
-    "numToStr/Comment.nvim",
-    config = function()
-      require("mcritchlow.plugins.config.comment")
     end,
   },
   {

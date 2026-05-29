@@ -10,7 +10,7 @@ if not ok_lspkind then
 end
 
 -- Set custom vsnip_snippet_dir
-vim.g.vsnip_snippet_dir = vim.loop.os_homedir() .. "/.config/vsnip"
+vim.g.vsnip_snippet_dir = vim.uv.os_homedir() .. "/.config/vsnip"
 
 cmp.setup({
 	snippet = {

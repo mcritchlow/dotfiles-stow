@@ -41,8 +41,9 @@ end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
--- Shared defaults applied to every LSP server via vim.lsp.config (nvim 0.11+).
--- Per-server files only need to set server-specific settings.
+-- Shared defaults merged into every LSP server via vim.lsp.config (nvim 0.11+).
+-- Per-server settings live in ~/.config/nvim/lsp/<name>.lua and are
+-- auto-discovered, then merged on top of nvim-lspconfig's shipped defaults.
 vim.lsp.config("*", {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -51,7 +52,7 @@ vim.lsp.config("*", {
   },
 })
 
--- Install LSP servers
+-- Install LSP server binaries
 mason.setup {
   automatic_installation = true,
   ui = {
@@ -64,28 +65,30 @@ mason.setup {
   },
 }
 
+-- Servers auto-started via native lsp/ discovery + vim.lsp.enable().
+-- gopls is excluded: it's installed here but configured/started by go.nvim.
 local servers = {
   "ansiblels",
   "bashls",
   "docker_compose_language_service",
   "dockerls",
-  "gopls",
   "jsonls",
   "lua_ls",
   "yamlls",
 }
 
 require("mason-lspconfig").setup {
-  ensure_installed = servers
+  ensure_installed = vim.list_extend({ "gopls" }, vim.deepcopy(servers)),
 }
 
--- Create separate table to include null-ls for setup
--- mason-lspconfig gets confused if we add null-ls
-local lsp_servers = { "null-ls" }
-for _, s in ipairs(servers) do
-  table.insert(lsp_servers, s)
-end
+-- neodev configures the Lua library/globals for the nvim API; must run before
+-- lua_ls starts.
+require("neodev").setup({})
 
-for _, server in ipairs(lsp_servers) do
-  require("mcritchlow.lsp.servers." .. server).setup(on_attach, capabilities)
-end
+vim.lsp.enable(servers)
+
+-- Servers that can't use native lsp/ discovery:
+--   gopls  - driven by go.nvim
+--   null-ls - none-ls, not a real LSP server
+require("mcritchlow.lsp.servers.gopls").setup(on_attach, capabilities)
+require("mcritchlow.lsp.servers.null-ls").setup(on_attach, capabilities)

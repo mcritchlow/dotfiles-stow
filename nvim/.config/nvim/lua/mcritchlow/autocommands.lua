@@ -13,7 +13,7 @@ local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = t
 vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
   callback = function()
-    vim.highlight.on_yank({ higroup = 'Substitute', timeout = 300 })
+    vim.hl.on_yank({ higroup = 'Substitute', timeout = 300 })
   end,
   group = highlight_group,
 })
