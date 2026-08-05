@@ -17,3 +17,5 @@ nvim-local.lua
 solargraph_rails_definitions.rb
 !.gitlab-ci.yml
 !.env
+
+**/.claude/settings.local.json
